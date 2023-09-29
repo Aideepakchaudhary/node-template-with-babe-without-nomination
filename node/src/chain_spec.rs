@@ -21,7 +21,7 @@
 use grandpa_primitives::AuthorityId as GrandpaId;
 use node_template_runtime::{
 	constants::currency::*, wasm_binary_unwrap, BabeConfig, BalancesConfig, Block, CouncilConfig,
-	DemocracyConfig, ElectionsConfig, ImOnlineConfig, IndicesConfig, MaxNominations,
+	DemocracyConfig, ElectionsConfig, ImOnlineConfig, IndicesConfig,
 	NominationPoolsConfig, SessionConfig, SessionKeys, SocietyConfig, StakerStatus, StakingConfig,
 	SudoConfig, SystemConfig, TechnicalCommitteeConfig,
 };
@@ -276,8 +276,8 @@ pub fn testnet_genesis(
 		.map(|x| (x.0.clone(), x.0.clone(), STASH, StakerStatus::Validator))
 		.chain(initial_nominators.iter().map(|x| {
 			use rand::{seq::SliceRandom, Rng};
-			let limit = (MaxNominations::get() as usize).min(initial_authorities.len());
-			let count = rng.gen::<usize>() % limit;
+			let limit = ();
+			let count = rng.gen::<usize>();
 			let nominations = initial_authorities
 				.as_slice()
 				.choose_multiple(&mut rng, count)
