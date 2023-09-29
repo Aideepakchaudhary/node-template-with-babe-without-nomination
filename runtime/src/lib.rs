@@ -804,20 +804,20 @@ impl Convert<sp_core::U256, Balance> for U256ToBalance {
 	}
 }
 
-impl pallet_nomination_pools::Config for Runtime {
-	type WeightInfo = ();
-	type RuntimeEvent = RuntimeEvent;
-	type Currency = Balances;
-	type RewardCounter = FixedU128;
-	type BalanceToU256 = BalanceToU256;
-	type U256ToBalance = U256ToBalance;
-	type Staking = Staking;
-	type PostUnbondingPoolsWindow = PostUnbondPoolsWindow;
-	type MaxMetadataLen = ConstU32<256>;
-	type MaxUnbonding = ConstU32<8>;
-	type PalletId = NominationPoolsPalletId;
-	type MaxPointsToBalance = MaxPointsToBalance;
-}
+// impl pallet_nomination_pools::Config for Runtime {
+// 	type WeightInfo = ();
+// 	type RuntimeEvent = RuntimeEvent;
+// 	type Currency = Balances;
+// 	type RewardCounter = FixedU128;
+// 	type BalanceToU256 = BalanceToU256;
+// 	type U256ToBalance = U256ToBalance;
+// 	type Staking = Staking;
+// 	type PostUnbondingPoolsWindow = PostUnbondPoolsWindow;
+// 	type MaxMetadataLen = ConstU32<256>;
+// 	type MaxUnbonding = ConstU32<8>;
+// 	type PalletId = NominationPoolsPalletId;
+// 	type MaxPointsToBalance = MaxPointsToBalance;
+// }
 
 parameter_types! {
 	pub const VoteLockingPeriod: BlockNumber = 30 * DAYS;
@@ -1931,7 +1931,7 @@ construct_runtime!(
 		Whitelist: pallet_whitelist,
 		AllianceMotion: pallet_collective::<Instance3>,
 		Alliance: pallet_alliance,
-		NominationPools: pallet_nomination_pools,
+		// NominationPools: pallet_nomination_pools,
 		RankedPolls: pallet_referenda::<Instance2>,
 		RankedCollective: pallet_ranked_collective,
 		AssetConversion: pallet_asset_conversion,
@@ -1988,7 +1988,7 @@ pub type Executive = frame_executive::Executive<
 // All migrations executed on runtime upgrade as a nested tuple of types implementing
 // `OnRuntimeUpgrade`.
 type Migrations = (
-	pallet_nomination_pools::migration::v2::MigrateToV2<Runtime>,
+	// pallet_nomination_pools::migration::v2::MigrateToV2<Runtime>,
 	pallet_alliance::migration::Migration<Runtime>,
 	pallet_contracts::Migration<Runtime>,
 );
@@ -2040,7 +2040,7 @@ mod benches {
 		[pallet_message_queue, MessageQueue]
 		[pallet_mmr, Mmr]
 		[pallet_multisig, Multisig]
-		[pallet_nomination_pools, NominationPoolsBench::<Runtime>]
+		// [pallet_nomination_pools, NominationPoolsBench::<Runtime>]
 		[pallet_offences, OffencesBench::<Runtime>]
 		[pallet_preimage, Preimage]
 		[pallet_proxy, Proxy]
@@ -2179,19 +2179,19 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl pallet_nomination_pools_runtime_api::NominationPoolsApi<Block, AccountId, Balance> for Runtime {
-		fn pending_rewards(who: AccountId) -> Balance {
-			NominationPools::api_pending_rewards(who).unwrap_or_default()
-		}
-
-		fn points_to_balance(pool_id: pallet_nomination_pools::PoolId, points: Balance) -> Balance {
-			NominationPools::api_points_to_balance(pool_id, points)
-		}
-
-		fn balance_to_points(pool_id: pallet_nomination_pools::PoolId, new_funds: Balance) -> Balance {
-			NominationPools::api_balance_to_points(pool_id, new_funds)
-		}
-	}
+	// impl pallet_nomination_pools_runtime_api::NominationPoolsApi<Block, AccountId, Balance> for Runtime {
+	// 	fn pending_rewards(who: AccountId) -> Balance {
+	// 		NominationPools::api_pending_rewards(who).unwrap_or_default()
+	// 	}
+	//
+	// 	fn points_to_balance(pool_id: pallet_nomination_pools::PoolId, points: Balance) -> Balance {
+	// 		NominationPools::api_points_to_balance(pool_id, points)
+	// 	}
+	//
+	// 	fn balance_to_points(pool_id: pallet_nomination_pools::PoolId, new_funds: Balance) -> Balance {
+	// 		NominationPools::api_balance_to_points(pool_id, new_funds)
+	// 	}
+	// }
 
 	impl pallet_staking_runtime_api::StakingApi<Block, Balance> for Runtime {
 		fn nominations_quota(balance: Balance) -> u32 {
@@ -2546,7 +2546,7 @@ impl_runtime_apis! {
 			use pallet_election_provider_support_benchmarking::Pallet as EPSBench;
 			use frame_system_benchmarking::Pallet as SystemBench;
 			use baseline::Pallet as BaselineBench;
-			use pallet_nomination_pools_benchmarking::Pallet as NominationPoolsBench;
+			// use pallet_nomination_pools_benchmarking::Pallet as NominationPoolsBench;
 
 			let mut list = Vec::<BenchmarkList>::new();
 			list_benchmarks!(list, extra);
@@ -2569,14 +2569,14 @@ impl_runtime_apis! {
 			use pallet_election_provider_support_benchmarking::Pallet as EPSBench;
 			use frame_system_benchmarking::Pallet as SystemBench;
 			use baseline::Pallet as BaselineBench;
-			use pallet_nomination_pools_benchmarking::Pallet as NominationPoolsBench;
+			// use pallet_nomination_pools_benchmarking::Pallet as NominationPoolsBench;
 
 			impl pallet_session_benchmarking::Config for Runtime {}
 			impl pallet_offences_benchmarking::Config for Runtime {}
 			impl pallet_election_provider_support_benchmarking::Config for Runtime {}
 			impl frame_system_benchmarking::Config for Runtime {}
 			impl baseline::Config for Runtime {}
-			impl pallet_nomination_pools_benchmarking::Config for Runtime {}
+			// impl pallet_nomination_pools_benchmarking::Config for Runtime {}
 
 			use frame_support::traits::WhitelistedStorageKeys;
 			let mut whitelist: Vec<TrackedStorageKey> = AllPalletsWithSystem::whitelisted_storage_keys();

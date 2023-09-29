@@ -22,7 +22,7 @@ use grandpa_primitives::AuthorityId as GrandpaId;
 use node_template_runtime::{
 	constants::currency::*, wasm_binary_unwrap, BabeConfig, BalancesConfig, Block, CouncilConfig,
 	DemocracyConfig, ElectionsConfig, ImOnlineConfig, IndicesConfig,
-	NominationPoolsConfig, SessionConfig, SessionKeys, SocietyConfig, StakerStatus, StakingConfig,
+	 SessionConfig, SessionKeys, SocietyConfig, StakerStatus, StakingConfig,
 	SudoConfig, SystemConfig, TechnicalCommitteeConfig,
 };
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
@@ -276,7 +276,6 @@ pub fn testnet_genesis(
 		.map(|x| (x.0.clone(), x.0.clone(), STASH, StakerStatus::Validator))
 		.chain(initial_nominators.iter().map(|x| {
 			use rand::{seq::SliceRandom, Rng};
-			let limit = ();
 			let count = rng.gen::<usize>();
 			let nominations = initial_authorities
 				.as_slice()
@@ -359,11 +358,11 @@ pub fn testnet_genesis(
 		transaction_payment: Default::default(),
 		alliance: Default::default(),
 		alliance_motion: Default::default(),
-		nomination_pools: NominationPoolsConfig {
-			min_create_bond: 10 * DOLLARS,
-			min_join_bond: 1 * DOLLARS,
-			..Default::default()
-		},
+		// nomination_pools: NominationPoolsConfig {
+		// 	min_create_bond: 10 * DOLLARS,
+		// 	min_join_bond: 1 * DOLLARS,
+		// 	..Default::default()
+		// },
 		glutton: Default::default(),
 	}
 }
